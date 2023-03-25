@@ -1,6 +1,7 @@
-package proyecto_concesionaria; // declaración de paquete
+package main.java; // declaración de paquete
 
 import java.util.Scanner; // importación para usar la clase Scanner
+import main.java.com.app.concesionaria.Concesionaria;
 
 public class App {
     public static void main(String[] args) {
