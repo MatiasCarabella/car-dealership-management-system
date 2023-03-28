@@ -1,7 +1,8 @@
-package proyecto_concesionaria;
+package main.java.com.app.concesionaria;
 
 import java.util.ArrayList; // importación para usar la clase ArrayList
 import java.util.Scanner; // importación para usar la clase Scanner
+import main.java.com.app.vehiculo.Vehiculo; // importación para usar la clase Vehiculo
 
 // Clase Concesionaria: representa al negocio que vende los vehículos
 public class Concesionaria {

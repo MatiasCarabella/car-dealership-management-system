@@ -1,7 +1,7 @@
 package main.java; // declaración de paquete
 
 import java.util.Scanner; // importación para usar la clase Scanner
-import main.java.com.app.concesionaria.Concesionaria;
+import main.java.com.app.concesionaria.Concesionaria; // importación para usar la clase Concesionaria
 
 public class App {
     public static void main(String[] args) {

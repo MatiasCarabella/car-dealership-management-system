@@ -1,4 +1,4 @@
-package proyecto_concesionaria;
+package main.java.com.app.vehiculo;
 
 // Clase Vehiculo: representa a cada vehículo que se vende en la concesionaria
 public class Vehiculo {
