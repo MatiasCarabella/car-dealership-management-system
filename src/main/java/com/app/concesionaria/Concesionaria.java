@@ -2,6 +2,9 @@ package main.java.com.app.concesionaria;
 
 import java.util.ArrayList; // importación para usar la clase ArrayList
 import java.util.Scanner; // importación para usar la clase Scanner
+
+import javax.sound.midi.Soundbank;
+
 import main.java.com.app.vehiculo.Vehiculo; // importación para usar la clase Vehiculo
 
 // Clase Concesionaria: representa al negocio que vende los vehículos
@@ -27,15 +30,17 @@ public class Concesionaria {
   public void menu() {
     int opcion;
     do {
+      System.out.println("");
       System.out.println("Bienvenido a la concesionaria " + nombre);
       System.out.println("Seleccione una opción:");
       System.out.println("1. Registrar un vehículo");
-      System.out.println("2. Mostrar el listado de vehículos disponibles");
-      System.out.println("3. Buscar un vehículo por marca");
-      System.out.println("4. Buscar un vehículo por rango de precio");
-      System.out.println("5. Vender un vehículo");
-      System.out.println("6. Mostrar las ventas realizadas y el total recaudado");
-      System.out.println("7. Salir");
+      System.out.println("2. Mostrar todos los vehículos disponibles");
+      System.out.println("3. Buscar vehiculos por marca");
+      System.out.println("4. Buscar vehiculos con kilometraje menor a X");
+      System.out.println("5. Buscar vehiculos por rango de precio");
+      System.out.println("6. Vender un vehículo");
+      System.out.println("7. Mostrar las ventas realizadas y el total recaudado");
+      System.out.println("8. Salir");
       opcion = sc.nextInt();
       switch (opcion) {
       case 1:
@@ -48,27 +53,30 @@ public class Concesionaria {
         buscarPorMarca();
         break;
       case 4:
-        buscarPorPrecio();
+        buscarPorKilometraje();
         break;
       case 5:
-        venderVehiculo();
+        buscarPorPrecio();
         break;
       case 6:
-        mostrarVentas();
+        venderVehiculo();
         break;
       case 7:
+        mostrarVentas();
+        break;
+      case 8:
         System.out.println("Gracias por usar la concesionaria " + nombre);
         break;
       default:
         System.out.println("Opción inválida");
       }
-    } while (opcion != 7);
+    } while (opcion != 8);
   }
 
   // Pide al usuario los datos de un vehículo y lo agrega al stock
   public void registrarVehiculo() {
     String marca, modelo;
-    int año;
+    int año, km;
     double precio;
 
     sc.nextLine(); // limpiar el buffer del teclado
@@ -81,11 +89,14 @@ public class Concesionaria {
     System.out.print("Ingrese el año del vehículo: ");
     año = sc.nextInt();
 
+    System.out.print("Ingrese el kilometraje del vehículo: ");
+    km = sc.nextInt();
+
     System.out.print("Ingrese el precio del vehículo: ");
     precio = sc.nextDouble();
 
     // Crear un objeto de la clase Vehiculo con los datos ingresados
-    Vehiculo v = new Vehiculo(marca, modelo, año, precio);
+    Vehiculo v = new Vehiculo(marca, modelo, año, km, precio);
 
     // Agregar el objeto a la lista de stock
     stock.add(v);
@@ -130,6 +141,30 @@ public class Concesionaria {
     // Si no se encontró ningún vehículo con esa marca, mostrar un mensaje al usuario
     if (!encontrado) {
       System.out.println("No hay ningún vehículo con esa marca");
+    }
+  }
+
+  // Pide al usuario un kilometraje máximo y muestra los vehículos que se encuentran por debajo de ese valor
+  public void buscarPorKilometraje() {
+
+    int maximo;
+    boolean encontrado = false; // variable para indicar si se encontró algún vehículo
+
+    System.out.print("Ingrese el kilometraje máximo que desea aceptar: ");
+    maximo = sc.nextInt();
+
+    // Recorrer la lista de stock y verificar si el kilometraje de cada vehículo está por debajo del máximo ingresados por el usuario
+    for (Vehiculo v: stock) {
+      if (v.getKm() <= maximo) {
+        // Si se encuentra un vehículo que cumpla la condición, mostrar sus datos y cambiar el valor de encontrado a true 
+        v.mostrarDatos();
+        encontrado = true;
+      }
+    }
+
+    // Si no se encontró ningún vehículo dentro del rango, mostrar un mensaje al usuario
+    if (!encontrado) {
+      System.out.println("No hay ningún vehículo dentro de ese rango de precio");
     }
   }
 
