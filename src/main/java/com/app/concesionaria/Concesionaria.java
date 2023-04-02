@@ -1,9 +1,8 @@
 package main.java.com.app.concesionaria;
 
+import java.io.IOException;
 import java.util.ArrayList; // importación para usar la clase ArrayList
 import java.util.Scanner; // importación para usar la clase Scanner
-
-import javax.sound.midi.Soundbank;
 
 import main.java.com.app.vehiculo.Vehiculo; // importación para usar la clase Vehiculo
 
@@ -27,7 +26,7 @@ public class Concesionaria {
   // Métodos:
 
   // Muestra un menú de opciones al usuario y ejecuta la opción elegida
-  public void menu() {
+  public void menuPrincipal() throws IOException {
     int opcion;
     do {
       System.out.println("");
@@ -35,12 +34,10 @@ public class Concesionaria {
       System.out.println("Seleccione una opción:");
       System.out.println("1. Registrar un vehículo");
       System.out.println("2. Mostrar todos los vehículos disponibles");
-      System.out.println("3. Buscar vehiculos por marca");
-      System.out.println("4. Buscar vehiculos con kilometraje menor a X");
-      System.out.println("5. Buscar vehiculos por rango de precio");
-      System.out.println("6. Vender un vehículo");
-      System.out.println("7. Mostrar las ventas realizadas y el total recaudado");
-      System.out.println("8. Salir");
+      System.out.println("3. Buscar vehiculos");
+      System.out.println("4. Vender un vehículo");
+      System.out.println("5. Mostrar las ventas realizadas y el total recaudado");
+      System.out.println("0. Salir");
       opcion = sc.nextInt();
       switch (opcion) {
       case 1:
@@ -50,27 +47,21 @@ public class Concesionaria {
         mostrarStock();
         break;
       case 3:
-        buscarPorMarca();
+        menuBusqueda();
         break;
       case 4:
-        buscarPorKilometraje();
-        break;
-      case 5:
-        buscarPorPrecio();
-        break;
-      case 6:
         venderVehiculo();
         break;
-      case 7:
+      case 5:
         mostrarVentas();
         break;
-      case 8:
+      case 0:
         System.out.println("Gracias por usar la concesionaria " + nombre);
         break;
       default:
         System.out.println("Opción inválida");
       }
-    } while (opcion != 8);
+    } while (opcion != 0);
   }
 
   // Pide al usuario los datos de un vehículo y lo agrega al stock
@@ -105,8 +96,8 @@ public class Concesionaria {
   }
 
   // Muestra el listado de vehículos disponibles en el stock
-  public void mostrarStock() {
-
+  public void mostrarStock() throws IOException {
+    System.out.println("");
     // Verificar si hay vehículos en el stock
     if (stock.isEmpty()) {
       System.out.println("No hay vehículos disponibles");
@@ -117,111 +108,159 @@ public class Concesionaria {
         v.mostrarDatos();
       }
     }
+    System.out.println("Presiona ENTER para volver al menú principal");
+    System.in.read();
   }
 
-  // Pide al usuario una marca y muestra los vehículos que coinciden con esa marca
-  public void buscarPorMarca() {
+  public void menuBusqueda() throws IOException {
+    int opcion;
+    // La variable criterio se utilizará como 'flag' para saber si el usuario ya ha ingresado algún criterio de búsqueda,
+    // en tal caso se mostrará el resumen de todos los criterios ingresados y la opción de 'Buscar' en el menú                            
+    boolean criterio = false;
+    // Se inicializan todas las variables con valores que se utilizarán para determinar si el usuario 
+    String marca = "";
+    int añoMin = -1, añoMax = -1, kmMax = -1;
+    double precioMin = -1, precioMax = -1;
+    do {
+      System.out.println("");
+      // Si criterio == true se muestra el resumen de criterios de búsqueda ingresados
+      if(criterio) {
+        System.out.println("Criterios de búsqueda definidos:");
+        // Si 'marca' tiene un valor distinto al de inicialización, se muestra
+        if(marca != "") {
+          System.out.println("Marca: " + marca);
+        }
+        // Si 'añoMin'/'añoMax' tienen valores distintos al de inicialización, se muestran
+        if(añoMin != -1 && añoMax != -1) {
+          System.out.println("Año: Entre " + añoMin + " y " + añoMax);
+        }
+        // Si 'kmMax' tiene un valor distinto al de inicialización, se muestra
+        if(kmMax != -1) {
+          System.out.println("KM: Menor a " + kmMax);
+        }
+        // Si 'precioMin'/'precioMax' tienen valores distintos al de inicialización, se muestran
+        if(precioMin != -1 && precioMax != -1) {
+          System.out.println("Precio: Entre $" + precioMin + " y $" + precioMax);
+        }
+        System.out.println("");
+        System.out.println("Puedes agregar más criterios, o buscar en base a los criterios actuales.");
+      } else {
+        System.out.println("¿Qué criterio deseas utilizar para buscar?");
+      }
 
-    String marca;
-    boolean encontrado = false; // variable para indicar si se encontró algún vehículo
+      System.out.println("Seleccione una opción:");
+      System.out.println("1. Marca");
+      System.out.println("2. Rango de años");
+      System.out.println("3. Kilometraje menor a X");
+      System.out.println("4. Rango de precio");
+      if (criterio) {
+        System.out.println("5. Buscar vehículos");;
+      }
+      System.out.println("0. Volver al menú principal");
+      opcion = sc.nextInt();
+      switch (opcion) {
+      case 1:
+        sc.nextLine(); // limpiar el buffer del teclado
+        System.out.print("Ingrese la marca que desea buscar: ");
+        marca = sc.nextLine();
+        criterio = true;
+        break;
+      case 2:
+        System.out.print("Ingrese el año mínimo que desea buscar: ");
+        añoMin = sc.nextInt();
+        System.out.print("Ingrese el año máximo que desea buscar: ");
+        añoMax = sc.nextInt();
+        criterio = true;
+        break;
+      case 3:
+        System.out.print("Ingrese el kilometraje máximo que desea aceptar: ");
+        kmMax = sc.nextInt();
+        criterio = true;
+        break;
+      case 4:
+        System.out.print("Ingrese el precio mínimo que desea buscar: ");
+        precioMin = sc.nextDouble();
+        System.out.print("Ingrese el precio máximo que desea buscar: ");
+        precioMax = sc.nextDouble();
+        criterio = true;
+        break;
+      case 5:
+        if(criterio) {
+          buscarVehiculos(marca, añoMin, añoMax, kmMax, precioMin, precioMax);
+        } else {
+          System.out.println("Opción inválida");
+        }
+        break;
+      default:
+        if(opcion != 0) {
+          System.out.println("Opción inválida");
+        }
+      }
+    } while (opcion != 0);
+  }
 
-    sc.nextLine(); // limpiar el buffer del teclado
-    System.out.print("Ingrese la marca que desea buscar: ");
-    marca = sc.nextLine();
-
-    // Recorrer la lista de stock y comparar la marca de cada vehículo con la ingresada por el usuario
+  public void buscarVehiculos(String marca, int añoMin, int añoMax, int kmMax, double precioMin, double precioMax) throws IOException {
+    boolean encontrado = false;
     for (Vehiculo v: stock) {
-      if (v.getMarca().equalsIgnoreCase(marca)) { // ignorar las mayúsculas y minúsculas en la comparación
-        // Si se encuentra una coincidencia, mostrar los datos del vehículo y cambiar el valor de encontrado a true
+      boolean cumpleCriterio = true;
+      if (marca != "") {
+        if (!v.getMarca().equalsIgnoreCase(marca)) {
+          cumpleCriterio = false;
+        }
+      }
+      if (añoMin != -1 && añoMax != -1) {
+        if (v.getAño() < añoMin || v.getAño() > añoMax) {
+          cumpleCriterio = false;
+        }
+      }
+      if (kmMax != -1) {
+        if(v.getKm() > kmMax) {
+          cumpleCriterio = false;
+        }
+      }
+      if (precioMin != -1 && precioMax != -1) {
+        if (v.getPrecio() < precioMin || v.getPrecio() > precioMax) {
+          cumpleCriterio = false;
+        }
+      }
+      if (cumpleCriterio) {
         v.mostrarDatos();
         encontrado = true;
       }
+      cumpleCriterio = true;
     }
-
-    // Si no se encontró ningún vehículo con esa marca, mostrar un mensaje al usuario
     if (!encontrado) {
-      System.out.println("No hay ningún vehículo con esa marca");
+      System.out.println("No se encontraron vehículos que cumplan los criterios de búsqueda");
     }
-  }
-
-  // Pide al usuario un kilometraje máximo y muestra los vehículos que se encuentran por debajo de ese valor
-  public void buscarPorKilometraje() {
-
-    int maximo;
-    boolean encontrado = false; // variable para indicar si se encontró algún vehículo
-
-    System.out.print("Ingrese el kilometraje máximo que desea aceptar: ");
-    maximo = sc.nextInt();
-
-    // Recorrer la lista de stock y verificar si el kilometraje de cada vehículo está por debajo del máximo ingresados por el usuario
-    for (Vehiculo v: stock) {
-      if (v.getKm() <= maximo) {
-        // Si se encuentra un vehículo que cumpla la condición, mostrar sus datos y cambiar el valor de encontrado a true 
-        v.mostrarDatos();
-        encontrado = true;
-      }
-    }
-
-    // Si no se encontró ningún vehículo dentro del rango, mostrar un mensaje al usuario
-    if (!encontrado) {
-      System.out.println("No hay ningún vehículo dentro de ese rango de precio");
-    }
-  }
-
-  // Pide al usuario un rango de precio mínimo y máximo y muestra los vehículos que se encuentran dentro de ese rango
-  public void buscarPorPrecio() {
-
-    double minimo, maximo;
-    boolean encontrado = false; // variable para indicar si se encontró algún vehículo
-
-    System.out.print("Ingrese el precio mínimo que desea buscar: ");
-    minimo = sc.nextDouble();
-
-    System.out.print("Ingrese el precio máximo que desea buscar: ");
-    maximo = sc.nextDouble();
-
-    // Recorrer la lista de stock y verificar si el precio de cada vehículo está entre el mínimo y el máximo ingresados por el usuario
-    for (Vehiculo v: stock) {
-      if (v.getPrecio() >= minimo && v.getPrecio() <= maximo) {
-        // Si se encuentra un vehículo dentro del rango, mostrar sus datos y cambiar el valor de encontrado a true 
-        v.mostrarDatos();
-        encontrado = true;
-      }
-    }
-
-    // Si no se encontró ningún vehículo dentro del rango, mostrar un mensaje al usuario
-    if (!encontrado) {
-      System.out.println("No hay ningún vehículo dentro de ese rango de precio");
-    }
+    System.out.println("Presiona ENTER para volver al menú de búsqueda");
+    System.in.read();
   }
 
   // Pide al usuario el índice de un vehículo en el stock y lo elimina del stock y lo agrega a las ventas
-  public void venderVehiculo() {
-
-    int indice;
-
+  public void venderVehiculo() throws IOException {
+    System.out.println("");
+    int id;
     // Verificar si hay vehículos en el stock
     if (stock.isEmpty()) {
       System.out.println("No hay vehículos disponibles para vender");
     } else {
       // Mostrar el listado de vehículos disponibles con sus índices
       System.out.println("Listado de vehículos disponibles:");
-      for (int i = 0; i < stock.size(); i++) {
-        System.out.print("Índice: " + i + " - ");
-        stock.get(i).mostrarDatos();
+      for (int i = 1; i-1 < stock.size(); i++) {
+        System.out.println("ID: " + i);
+        stock.get(i-1).mostrarDatos();
       }
 
-      // Pedir al usuario que ingrese el índice del vehículo que quiere vender
-      System.out.print("Ingrese el índice del vehículo que quiere vender: ");
-      indice = sc.nextInt();
+      System.out.print("Ingrese el índice del vehículo que desea vender: ");
+      id = sc.nextInt();
 
       // Verificar si el índice es válido
-      if (indice >= 0 && indice < stock.size()) {
+      if (id >= 1 && id-1 < stock.size()) {
         // Obtener el vehículo correspondiente al índice ingresado
-        Vehiculo v = stock.get(indice);
+        Vehiculo v = stock.get(id-1);
 
         // Eliminar el vehículo del stock y agregarlo a las ventas
-        stock.remove(indice);
+        stock.remove(id-1);
         ventas.add(v);
 
         System.out.println("Vehículo vendido con éxito");
@@ -229,11 +268,14 @@ public class Concesionaria {
         System.out.println("Índice inválido");
       }
     }
+    System.out.println("");
+    System.out.println("Presiona ENTER para volver al menú principal");
+    System.in.read();
   }
 
   // Muestra el listado de los vehículos vendidos y el total recaudado por la concesionaria
-  public void mostrarVentas() {
-
+  public void mostrarVentas() throws IOException {
+    System.out.println("");
     double total = 0; // variable para acumular el total recaudado
 
     // Verificar si hay ventas realizadas
@@ -251,5 +293,8 @@ public class Concesionaria {
       // Mostrar el total recaudado por la concesionaria
       System.out.println("Total recaudado: $" + total);
     }
+      System.out.println("");
+      System.out.println("Presiona ENTER para volver al menú principal");
+      System.in.read();
   }
 }

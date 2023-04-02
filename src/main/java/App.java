@@ -1,10 +1,11 @@
 package main.java; // declaración de paquete
 
+import java.io.IOException;
 import java.util.Scanner; // importación para usar la clase Scanner
 import main.java.com.app.concesionaria.Concesionaria; // importación para usar la clase Concesionaria
 
 public class App {
-    public static void main(String[] args) {
+    public static void main(String[] args) throws IOException {
         // Requerimientos:
         // - Registrar vehículos con sus datos (marca, modelo, año, precio, etc.)
         // - Mostrar el listado de vehículos disponibles
@@ -19,7 +20,7 @@ public class App {
 
         Concesionaria c = new Concesionaria(nombreConcesionaria); // instancia de la clase Concesionaria
         
-        c.menu(); // llamada al método menu        
+        c.menuPrincipal(); // llamada al método menu        
 
         sc.close(); // cerramos el scanner para liberar recursos, ya que no lo utilizaremos más en este método
     }
