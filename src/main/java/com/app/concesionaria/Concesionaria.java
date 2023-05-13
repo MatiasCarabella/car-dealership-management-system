@@ -351,6 +351,7 @@ public class Concesionaria {
           // Agregar el vehículo a la lista de vehículos del cliente
           c.addVehiculo(v);
 
+          System.out.println("");
           System.out.println("Vehículo vendido con éxito");
         } else {
           System.out.println("ID de cliente inválido");
@@ -378,7 +379,7 @@ public class Concesionaria {
       // Recorrer la lista de ventas y mostrar los datos de cada vehículo vendido y sumar su precio al total
       for (Venta v: ventas) {
         v.mostrarDatos();
-        System.out.println("------------");
+        System.out.println("------------------");
         total += v.getPrecio();
       }
 
