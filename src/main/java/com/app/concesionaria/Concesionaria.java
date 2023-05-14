@@ -5,8 +5,6 @@ import java.util.ArrayList; // importación para usar la clase ArrayList
 import java.util.Scanner; // importación para usar la clase Scanner
 
 import main.java.com.app.vehiculo.Vehiculo; // importación para usar la clase Vehiculo
-import main.java.com.app.cliente.Cliente; // importación para usar la clase Cliente
-import main.java.com.app.venta.Venta; // importación para usar la clase Cliente
 
 // Clase Concesionaria: representa al negocio que vende los vehículos
 public class Concesionaria {
@@ -14,16 +12,14 @@ public class Concesionaria {
   // Atributos:
   private String nombre;
   private ArrayList < Vehiculo > stock; // lista de vehículos disponibles
-  private ArrayList < Cliente > clientes; // Lista de clientes
-  private ArrayList < Venta > ventas; // lista de ventas realizadas
+  private ArrayList < Vehiculo > ventas; // lista de vehículos vendidos
   private Scanner sc; // objeto para leer datos por teclado
 
   // Constructor:
   public Concesionaria(String nombre) {
     this.nombre = nombre;
     stock = new ArrayList < Vehiculo > ();
-    clientes = new ArrayList < Cliente > ();
-    ventas = new ArrayList < Venta > ();
+    ventas = new ArrayList < Vehiculo > ();
     sc = new Scanner(System.in);
   }
 
@@ -39,10 +35,8 @@ public class Concesionaria {
       System.out.println("1. Registrar un vehículo");
       System.out.println("2. Mostrar todos los vehículos disponibles");
       System.out.println("3. Buscar vehiculos");
-      System.out.println("4. Registrar un cliente");
-      System.out.println("5. Mostrar todos los clientes registrados");
-      System.out.println("6. Registrar una venta");
-      System.out.println("7. Mostrar las ventas realizadas y el total recaudado");
+      System.out.println("4. Vender un vehículo");
+      System.out.println("5. Mostrar las ventas realizadas y el total recaudado");
       System.out.println("0. Salir");
       
       // Validación del input del usuario
@@ -63,15 +57,9 @@ public class Concesionaria {
         menuBusqueda();
         break;
       case 4:
-        registrarCliente();
+        venderVehiculo();
         break;
       case 5:
-        mostrarClientes();
-        break;
-      case 6:
-        registrarVenta();
-        break;
-      case 7:
         mostrarVentas();
         break;
       case 0:
@@ -263,54 +251,13 @@ public class Concesionaria {
     System.in.read();
   }
 
-  // Pide al usuario los datos de un cliente y lo agrega a la lista de clientes
-  private void registrarCliente() {
-    String nombre;
-    int documento;
-
-    sc.nextLine(); // limpiar el buffer del teclado
-    System.out.print("Ingrese el nombre completo del cliente: ");
-    nombre = sc.nextLine();
-
-    System.out.print("Ingrese el número de documento del cliente: ");
-    documento = sc.nextInt();
-
-    // Crear un objeto de la clase Cliente con los datos ingresados
-    Cliente c = new Cliente(nombre, documento);
-
-    // Agregar el objeto a la lista de clientes
-    clientes.add(c);
-
-    System.out.println("Cliente registrado con éxito");
-  }
-
-  // Muestra el listado de clientes registrados
-  private void mostrarClientes() throws IOException {
-    System.out.println("");
-    // Verificar si hay clientes registrados
-    if (clientes.isEmpty()) {
-      System.out.println("No hay clientes registrados");
-    } else {
-      System.out.println("Listado de clientes registrados:");
-      // Recorrer la lista de clientes y mostrar los datos de cada cliente
-      for (Cliente c: clientes) {
-        c.mostrarDatos();
-      }
-    }
-    System.out.println("Presiona ENTER para volver al menú principal");
-    System.in.read();
-  }
-
   // Pide al usuario el ID de un vehículo en el stock, luego lo elimina del stock y lo agrega a las ventas
-  private void registrarVenta() throws IOException {
+  private void venderVehiculo() throws IOException {
     System.out.println("");
-    int idVehiculo;
-    int idCliente;
+    int id;
     // Verificar si hay vehículos en el stock
     if (stock.isEmpty()) {
       System.out.println("No hay vehículos disponibles para vender");
-    } else if (clientes.isEmpty()) {
-      System.out.println("No hay clientes registrados para comprar");
     } else {
       // Mostrar el listado de vehículos disponibles con sus IDs
       System.out.println("Listado de vehículos disponibles:");
@@ -320,44 +267,20 @@ public class Concesionaria {
       }
 
       System.out.print("Ingrese el ID del vehículo que desea vender: ");
-      idVehiculo = sc.nextInt();
+      id = sc.nextInt();
 
-      // Verificar si el índice del vehículo es válido
-      if (idVehiculo >= 1 && idVehiculo-1 < stock.size()) {
-        System.out.println("");
-        // Mostrar el listado de clientes registrados con sus IDs
-        System.out.println("Listado de clientes registrados:");
-        for (int i = 1; i-1 < clientes.size(); i++) {
-          System.out.println("ID: " + i);
-          clientes.get(i-1).mostrarDatos();
-        }
+      // Verificar si el índice es válido
+      if (id >= 1 && id-1 < stock.size()) {
+        // Obtener el vehículo correspondiente al ID ingresado
+        Vehiculo v = stock.get(id-1);
 
-        System.out.print("Ingrese el ID del cliente que realizará la compra: ");
-        idCliente = sc.nextInt();
+        // Eliminar el vehículo del stock y agregarlo a las ventas
+        stock.remove(id-1);
+        ventas.add(v);
 
-        // Verificar si el índice del vehículo es válido
-        if (idCliente >= 1 && idCliente-1 < clientes.size()) {
-          // Obtener el vehículo correspondiente al ID ingresado
-          Vehiculo v = stock.get(idVehiculo-1);
-          // Obtener el cliente correspondiente al ID ingresado
-          Cliente c = clientes.get(idCliente-1);
-
-          // Generar la Venta
-          Venta venta = new Venta(v, c);
-          // Agregar la Venta a la lista de ventas
-          ventas.add(venta);
-          // Eliminar el vehículo del stock y agregarlo a las ventas
-          stock.remove(idVehiculo-1);
-          // Agregar el vehículo a la lista de vehículos del cliente
-          c.addVehiculo(v);
-
-          System.out.println("");
-          System.out.println("Vehículo vendido con éxito");
-        } else {
-          System.out.println("ID de cliente inválido");
-        }        
+        System.out.println("Vehículo vendido con éxito");
       } else {
-        System.out.println("ID de vehículo inválido");
+        System.out.println("ID inválido");
       }
     }
     System.out.println("");
@@ -377,9 +300,8 @@ public class Concesionaria {
       System.out.println("Listado de ventas realizadas:");
 
       // Recorrer la lista de ventas y mostrar los datos de cada vehículo vendido y sumar su precio al total
-      for (Venta v: ventas) {
+      for (Vehiculo v: ventas) {
         v.mostrarDatos();
-        System.out.println("------------------");
         total += v.getPrecio();
       }
 
