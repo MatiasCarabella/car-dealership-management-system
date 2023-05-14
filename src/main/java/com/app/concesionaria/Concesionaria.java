@@ -18,9 +18,9 @@ public class Concesionaria {
   // Constructor:
   public Concesionaria(String nombre) {
     this.nombre = nombre;
-    stock = new ArrayList < Vehiculo > ();
-    ventas = new ArrayList < Vehiculo > ();
-    sc = new Scanner(System.in);
+    this.stock = new ArrayList < Vehiculo > ();
+    this.ventas = new ArrayList < Vehiculo > ();
+    this.sc = new Scanner(System.in);
   }
 
   // Métodos:
