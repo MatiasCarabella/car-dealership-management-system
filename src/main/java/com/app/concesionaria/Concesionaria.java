@@ -21,8 +21,21 @@ public class Concesionaria {
   // Constructor:
   public Concesionaria(String nombre) {
     this.nombre = nombre;
+
     stock = new ArrayList < Vehiculo > ();
+    // Se pre-cargan algunos Vehículos de prueba
+    stock.add(new Vehiculo("Ford", "Fiesta", 2011, 75000, 10000));
+    stock.add(new Vehiculo("Chevrolet", "Corsa", 2002, 200000, 5000));
+    stock.add(new Vehiculo("Audi", "A1", 2012, 50000, 40000));
+
     clientes = new ArrayList < Cliente > ();
+    // Se pre-cargan algunos Clientes de prueba
+    clientes.add(new Cliente("Matias Carabella", 40676324));
+    clientes.add(new Cliente("Pedro Pascal", 31918472));
+    clientes.add(new Cliente("Sofía Ramirez", 21921582));
+
+
+
     ventas = new ArrayList < Venta > ();
     sc = new Scanner(System.in);
   }
