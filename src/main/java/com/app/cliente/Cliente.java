@@ -15,7 +15,7 @@ public class Cliente {
     public Cliente(String nombre, int documento) {
         this.nombre = nombre;
         this.documento = documento;
-        this.vehiculos = new ArrayList < Vehiculo > ();
+        vehiculos = new ArrayList < Vehiculo > ();
     }
 
      // Métodos:
