@@ -9,7 +9,9 @@ public class App {
         // Requerimientos:
         // - Registrar vehículos con sus datos (marca, modelo, año, precio, etc.)
         // - Mostrar el listado de vehículos disponibles
-        // - Buscar vehículos por marca o por rango de precio
+        // - Buscar vehículos por marca, rango de años, kilometraje o rango de precios
+        // - Registrar clientes
+        // - Mostrar todos los clientes registrados
         // - Vender vehículos y actualizar el stock
         // - Mostrar las ventas realizadas y el total recaudado
         Scanner sc = new Scanner(System.in); // objeto para leer datos por teclado

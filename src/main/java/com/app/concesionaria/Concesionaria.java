@@ -341,7 +341,6 @@ public class Concesionaria {
           Vehiculo v = stock.get(idVehiculo-1);
           // Obtener el cliente correspondiente al ID ingresado
           Cliente c = clientes.get(idCliente-1);
-
           // Generar la Venta
           Venta venta = new Venta(v, c);
           // Agregar la Venta a la lista de ventas

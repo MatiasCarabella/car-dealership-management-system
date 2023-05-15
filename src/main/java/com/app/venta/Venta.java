@@ -3,6 +3,7 @@ package main.java.com.app.venta;
 import main.java.com.app.vehiculo.Vehiculo; // importación para usar la clase Vehiculo
 import main.java.com.app.cliente.Cliente; // importación para usar la clase Cliente
 
+// Clase Venta: relaciona un Vehículo con el Cliente comprador
 public class Venta {
     // Atributos:
     private Vehiculo vehiculo;
