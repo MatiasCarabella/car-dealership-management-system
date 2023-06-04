@@ -562,6 +562,7 @@ public class Concesionaria {
               ventas.add(venta);
               // Eliminar el vehículo del stock y agregarlo a las ventas
               autos.remove(idVehiculo-1);
+              Auto.cantidadDeAutos--;
               // Agregar el vehículo a la lista de vehículos del cliente
               c.addAuto(a);
 
@@ -609,6 +610,7 @@ public class Concesionaria {
               ventas.add(venta);
               // Eliminar el vehículo del stock y agregarlo a las ventas
               camionetas.remove(idVehiculo-1);
+              Camioneta.cantidadDeCamionetas--;
               // Agregar el vehículo a la lista de vehículos del cliente
               c.addCamioneta(v);
 
@@ -656,6 +658,7 @@ public class Concesionaria {
               ventas.add(venta);
               // Eliminar el vehículo del stock y agregarlo a las ventas
               motos.remove(idVehiculo-1);
+              Moto.cantidadDeMotos--;
               // Agregar el vehículo a la lista de vehículos del cliente
               c.addMoto(m);
 
