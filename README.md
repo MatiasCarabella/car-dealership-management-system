@@ -1,18 +1,46 @@
+# Car Dealership Management System
+
+## Overview
+The Car Dealership Management System is a Java-based application designed to manage the inventory and operations of a car dealership. The system allows users to register vehicles and clients, search for vehicles based on various criteria, manage sales, and track revenue.
+
+## Features
+- **Vehicle Registration:** Add vehicles with details like brand, model, year, price, etc.
+- **Vehicle Listing:** Display a list of all available vehicles.
+- **Vehicle Search:** Search for vehicles by brand, year range, mileage, or price range.
+- **Client Registration:** Register new clients.
+- **Client Listing:** Display all registered clients.
+- **Sales Management:** Sell vehicles and update the inventory.
+- **Sales Tracking:** Display all sales made and the total revenue collected.
+
+## Usage
+1. **Start the Application:**
+   Run the main class `App.java` to start the application.
+   
+2. **Enter Dealership Name:**
+   Upon starting, the application will prompt you to enter the name of your dealership.
+   
+3. **Main Menu:**
+   Access the main menu to choose different operations like registering vehicles and clients, managing sales, and viewing listings.
+
 ## Getting Started
+To run the project locally:
 
-Welcome to the VS Code Java world. Here is a guideline to help you get started to write Java code in Visual Studio Code.
+1. **Clone the repository:**
+   ```sh
+   git clone https://github.com/yourusername/yourrepository.git
+   ```
 
-## Folder Structure
+2. **Navigate to the project directory:**
+    ```sh
+    cd yourrepository
+    ```
 
-The workspace contains two folders by default, where:
+3. **Compile and run the application:**
+    ```sh
+    javac -d bin src/main/java/App.java
+    java -cp bin main.java.App
+    ```
 
-- `src`: the folder to maintain sources
-- `lib`: the folder to maintain dependencies
+## Dependencies
 
-Meanwhile, the compiled output files will be generated in the `bin` folder by default.
-
-> If you want to customize the folder structure, open `.vscode/settings.json` and update the related settings there.
-
-## Dependency Management
-
-The `JAVA PROJECTS` view allows you to manage your dependencies. More details can be found [here](https://github.com/microsoft/vscode-java-dependency#manage-dependencies).
+    Java Development Kit (JDK) 8 or higher.
