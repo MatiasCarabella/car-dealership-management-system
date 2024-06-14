@@ -27,12 +27,12 @@ To run the project locally:
 
 1. **Clone the repository:**
    ```sh
-   git clone https://github.com/yourusername/yourrepository.git
+   git clone https://github.com/yourusername/car-dealership-management-system.git
    ```
 
 2. **Navigate to the project directory:**
     ```sh
-    cd yourrepository
+    cd car-dealership-management-system
     ```
 
 3. **Compile and run the application:**
